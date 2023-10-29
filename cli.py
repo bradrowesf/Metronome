@@ -1,5 +1,29 @@
 """Testbed for application"""
 
+import json
+
+from configs import MetronomeConfig, MetronomeConfigs
+
+
+def test_config():
+    """Some basic tests for the metronome config"""
+
+    mcs = MetronomeConfigs()
+
+    mc1 = MetronomeConfig("Metronome 1", 150)
+    mc2 = MetronomeConfig("My Snack", 120)
+
+    mcs.add_config(mc1)
+    mcs.add_config(mc2)
+
+    print(mcs.get_configs())
+
+    my_json = json.dumps(mcs.get_configs())
+
+    with open("testsettings.json", "w", encoding="utf-8") as jsonfile:
+        jsonfile.write(my_json)
+        jsonfile.close()
+
 
 def test_method():
     """A test method to validate that the CLI is working"""
@@ -25,6 +49,8 @@ def main():
 
         valid_commands = []
         valid_commands.append(["Test", "Run the test_method()", test_method])
+        valid_commands.append(
+            ["metro_config", "Run the test_config()", test_config])
 
         # Get and parse the commands
         instruction = input("Command: ")
